@@ -1,0 +1,32 @@
+body, html {
+    min-width: 400px;
+    min-height: 600px;
+    font: {
+        size: 24px;
+        family: 'Open Sans', sans-serif;
+    }
+    a {
+        text-decoration: none;
+        color: #1e88e5;
+    }
+    background-color: #fff;
+}
+
+.display {
+    display: inherit;
+}
+
+.not-display {
+    display: none;
+}
+
+#main {
+    margin: 100px auto 50px;
+}
+
+section.view {
+    display: none;
+    &.display {
+        display: inherit;
+    }
+}
