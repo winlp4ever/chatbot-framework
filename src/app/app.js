@@ -1,6 +1,7 @@
 import React, { Component, useReducer } from 'react';
 import io from 'socket.io-client';
 import $ from 'jquery';
+import './app.scss';
 
 class App extends Component {
     state = {
@@ -12,7 +13,7 @@ class App extends Component {
     componentDidMount() {
         this.state.socket.on('bot-msg', msg => {
             let copy = this.state.chats.slice();
-            copy.push(msg);
+            copy.push({name: 'Bob-beta', msg: msg});
             this.setState({chats: copy})
         })
     }
@@ -33,7 +34,7 @@ class App extends Component {
         if ($(e.currentTarget).val()) {
             this.state.socket.emit('user-msg', this.state.new_chat)
             let copy = this.state.chats.slice();
-            copy.push(this.state.new_chat);
+            copy.push({name: 'you', msg: this.state.new_chat});
             this.setState({chats: copy, new_chat: ''})
             $(e.currentTarget).val('');        
         }
@@ -45,9 +46,20 @@ class App extends Component {
     render() {
         return (
             <div className='app'>
-                {this.state.chats.map((sen, id) => (<div key={id}>{sen}</div>))}
+                {this.state.chats.map((chat, id) => (<div key={id}>
+                        <span className='username'>{chat.name}</span>
+                        <span>{chat.msg}</span>
+                    </div>))}
                 <div className='new-chat'>
-                    <input onChange={this.onChange} onKeyPress={this.submit} placeholder='chat..' />
+                    <textarea
+                        rows={1} 
+                        onChange={this.onChange} 
+                        onKeyPress={this.submit} 
+                        placeholder='&nbsp;' 
+                    />
+                    <span className='label'>
+                        Your comment
+                    </span>
                 </div>
             </div>
         )
