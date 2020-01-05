@@ -1,107 +1,55 @@
 import React, { Component, useReducer } from 'react';
-import Socio from '../socio/socio';
-import ConnectionError from '../connection-error/connection-error';
-import FullPost from '../full-post/full-post';
-import Auth from '../user-auth/user-auth';
 import io from 'socket.io-client';
-import Menu from '../menu/menu';
-import Editor from '../editor/editor';
-import { userContext } from '../user-context/user-context';
-import Home from '../home/home';
-
-import Cookies from 'js-cookie';
+import $ from 'jquery';
 
 class App extends Component {
     state = {
-        user: {
-            name: '',
-            email: '',
-        },
-        activeTab: 1,
-        postId: -1,
-        socket: io(),
+        chats: [],
+        new_chat: '',
+        socket: io()
     }
 
     componentDidMount() {
-        console.log(Cookies.get('user'));
-
-        let userdata = Cookies.get('user');
-
-        if (userdata) {
-            this.setState({user: JSON.parse(userdata)});   
-        }
-        
+        this.state.socket.on('bot-msg', msg => {
+            let copy = this.state.chats.slice();
+            copy.push(msg);
+            this.setState({chats: copy})
+        })
     }
 
-    componentWillUnmount = () => {
+    componentWillUnmount() {
         this.state.socket.disconnect();
     }
 
-    updateUser =  async (info) => {
-        if (info.name) {
-            await this.setState({user: {name: info.name, email: info.email}});
-            Cookies.set('user', this.state.user, {expires: 1});
-        }
+    onChange = (e) => {
+        this.setState({new_chat: e.target.value});
     }
 
-    viewEditor = () => {
-        this.setState({activeTab: 2, postId: -1})
+    submit = async (e) => {
+        let keycode = e.keyCode || e.which;
+        if (keycode != 13) return;
+        
+        e.preventDefault(); // prevents page reloading
+        if ($(e.currentTarget).val()) {
+            this.state.socket.emit('user-msg', this.state.new_chat)
+            let copy = this.state.chats.slice();
+            copy.push(this.state.new_chat);
+            this.setState({chats: copy, new_chat: ''})
+            $(e.currentTarget).val('');        
+        }
+        
+        
+
     }
 
-    viewFullPost = (id) => {
-        this.setState({activeTab: 1, postId: id});
-    }
-
-    viewSocio = () => {
-        this.setState({activeTab: 1, postId: -1});
-    }
-
-    viewHome = () => {
-        this.setState({activeTab: 0, postId: -1});
-    }
-
-    render = () => {
-        let menuOptions = [
-            {name: 'Home', onClick: this.viewHome}, 
-            {name: 'Wall', onClick: this.viewSocio}
-        ];
-        if (this.state.user.name == 'AII') menuOptions.push({name: 'Editor', onClick: this.viewEditor});
-
-        let auth = '';
-        if (!this.state.user.name) auth=(<Auth updateUser={this.updateUser} />);
-
-        let main = (<div>Oof! Error, page not found!</div>> -1);
-        if (this.state.activeTab == 0) {
-            main = (<Home />);
-        }
-
-        else if (this.state.activeTab == 1 && this.state.postId == -1) {
-            main = (<Socio socket={this.state.socket} 
-                viewFullPost={this.viewFullPost} 
-            />);
-        }
-            
-        else if (this.state.activeTab == 1 && this.state.postId > -1) {
-            main = <FullPost postId={this.state.postId} 
-                socket={this.state.socket} 
-            />;
-        } 
-        else if (this.state.activeTab == 2) {
-            main = <Editor />
-        }
-
-        const value = {
-            user: this.state.user,
-            updateUser: this.updateUser
-        }
-
+    render() {
         return (
-            <userContext.Provider value={value}>
-                <Menu links={menuOptions} activeTab={this.state.activeTab}/>
-                {main}
-                <ConnectionError />
-                {auth}
-            </userContext.Provider>
+            <div className='app'>
+                {this.state.chats.map((sen, id) => (<div key={id}>{sen}</div>))}
+                <div className='new-chat'>
+                    <input onChange={this.onChange} onKeyPress={this.submit} placeholder='chat..' />
+                </div>
+            </div>
         )
     }
 }

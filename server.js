@@ -82,19 +82,13 @@ io.on('connection', function(socket){
         count --;
         console.log(`1 user disconnected, rest ${count}`);
     });
-    socket.on('comment history', postId => {
-        console.log('request history ...');
-        console.log(posts[postId].comments);
-        socket.emit(`comment history postId=${postId}`, posts[postId].comments);
+    socket.on('bot-msg', msg => {
+        io.emit('bot-msg', msg);
+        console.log('bot: ' + msg);
     })
-    socket.on('submit comment', msg => {
-        posts[msg.postId].comments.push({username: msg.username, content: msg.comment});
-        console.log('message: ' + msg.comment);
-        io.emit(`new comment postId=${msg.postId}`, {username: msg.username, content: msg.comment});
-    });
-    socket.on('likes', id => {
-        posts[id].likes ++;
-        console.log(posts[id]);
+    socket.on('user-msg', msg => {
+        io.emit('user-msg', msg);
+        console.log('user: ' + msg);
     })
 });
 
@@ -111,45 +105,6 @@ app.get('/', (req, res, next) => {
         res.end();
     });
 });
-
-app.post('/get-post', (req, res) => {
-    let postId = req.query.postId;
-    res.json({ content: posts[postId].content, likes: posts[postId].likes });
-})
-
-app.post('/postIds', (req, res) => {
-    let keys = new Set(Object.keys(posts));
-    console.log(keys);
-    res.json({postIds: Object.keys(posts)});
-})
-
-app.post('/save-post', (req, res) => {
-    if (req.body.password != '2311') return;
-    let idx = Math.max(...Object.keys(posts))+1;
-    console.log(idx);
-    posts[idx] = {
-        id: idx,
-        content: {
-            title: req.body.title, 
-            text: req.body.content, 
-            shared_link: req.body.shared_link
-        },
-        likes: 0,
-        comments: []
-    };
-    console.log(posts);
-    res.json({
-        answer: 'y',
-    });
-})
-
-app.post('/admin-verify', (req, res) => {
-    if (req.body.pass != '2311') res.json({answer: 'n'});
-    res.json({
-        answer: 'y'
-    })
-})
-
 process.on('SIGINT', _ => {
     console.log('now you quit!');
     process.exit();

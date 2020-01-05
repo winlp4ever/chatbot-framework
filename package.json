@@ -52,6 +52,7 @@
     "react-hot-loader": "^4.12.15",
     "react-markdown": "^4.2.2",
     "react-syntax-highlighter": "^11.0.2",
+    "readline-sync": "^1.4.10",
     "remark-math": "^2.0.0",
     "remarkable": "^2.0.0",
     "request": "^2.88.0",

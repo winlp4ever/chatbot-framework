@@ -25,9 +25,11 @@ io.on('connection', socket => {
     });
 
     socket.on('python-msg', msg => {
-        rl.question('>> ' + msg + "\nNode: ", (res) => {
+        console.log('python: ' + msg + '\n');
+        rl.question('>> ', (res) => {
             io.emit('node-msg', res);
             rl.close();
         })
     })
+    
 })
