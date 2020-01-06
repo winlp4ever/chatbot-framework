@@ -3,7 +3,6 @@
     position: relative;   
     margin: 100px auto 50px; 
     >div{
-        position: relative;
         border-radius: 10px;
         height: auto;
         white-space: pre-wrap;
@@ -14,38 +13,56 @@
         display: block;
         border: none;
         box-sizing: border-box;
-        padding: 10px 10px;
-        margin:10px auto;
+        margin:5px auto;
         float: left;
         transition: all 0.2s;
         font: {
             family: 'Open Sans', sans-serif;
             size: 70%;
         }     
-        span.username {
-            display: inline-block;
-            box-sizing: border-box;
-            padding: 5px;
-            color: #1565c0;
-        }
-        button.del {
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            margin-top: -10px;
-            border: none;
-            background: none;
-            outline: none;
-            font {
-                size: 80%;
+        &:not(.new-chat) {
+            display: flex;
+            background: white;  
+            &.others {
+                flex-direction: row-reverse;
+                justify-content: flex-start;
             }
-            color: lightgrey;
-            &:hover {
-                color: grey;
+            span {
+                background: rgb(248, 248, 248);
+                display: inline-block;
+                box-sizing: border-box;
+                padding: 5px 10px;
+                border-radius: 15px;
+                margin: 5px;
+            }
+            span.username {
+                font: {
+                    weight: 700;
+                }
+                color: #1565c0;
+            }
+            button.del {
+                position: absolute;
+                right: 5px;
+                top: 50%;
+                margin-top: -10px;
+                border: none;
+                background: none;
+                outline: none;
+                font {
+                    size: 80%;
+                }
+                color: lightgrey;
+                &:hover {
+                    color: grey;
+                }
             }
         }
+        
     }
     .new-chat {
+        padding: 10px 10px;
+        margin:10px auto;
         box-sizing: border-box;
         border-radius: 0px;
         border-top-left-radius: 8px;

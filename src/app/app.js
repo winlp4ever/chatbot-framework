@@ -13,7 +13,7 @@ class App extends Component {
     componentDidMount() {
         this.state.socket.on('bot-msg', msg => {
             let copy = this.state.chats.slice();
-            copy.push({name: 'Bob-beta', msg: msg});
+            copy.push({name: 'Bob', msg: msg});
             this.setState({chats: copy})
         })
     }
@@ -38,18 +38,17 @@ class App extends Component {
             this.setState({chats: copy, new_chat: ''})
             $(e.currentTarget).val('');        
         }
-        
-        
-
     }
 
     render() {
         return (
             <div className='app'>
-                {this.state.chats.map((chat, id) => (<div key={id}>
+                {this.state.chats.map((chat, id) => (
+                    <div key={id} className={(chat.name == 'you') ? 'you': 'others'}>
                         <span className='username'>{chat.name}</span>
                         <span>{chat.msg}</span>
-                    </div>))}
+                    </div>)
+                )}
                 <div className='new-chat'>
                     <textarea
                         rows={1} 
@@ -58,7 +57,7 @@ class App extends Component {
                         placeholder='&nbsp;' 
                     />
                     <span className='label'>
-                        Your comment
+                        chat now
                     </span>
                 </div>
             </div>
