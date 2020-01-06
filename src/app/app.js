@@ -42,7 +42,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className='app'>
+            <div className='chat-app'>
                 {this.state.chats.map((chat, id) => (
                     <div key={id} className={(chat.name == 'you') ? 'you': 'others'}>
                         <span className='username'>{chat.name}</span>

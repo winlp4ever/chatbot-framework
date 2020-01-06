@@ -1,7 +1,15 @@
-.app {
+.chat-app {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     width: 60%;
-    position: relative;   
-    margin: 100px auto 50px; 
+    left: 20%;
+    position: fixed;   
+    height: 400px;
+    bottom: 0;
+    overflow-y: auto;
+    border-top: 1px solid lightgrey;
+    padding: 5px;
     >div{
         border-radius: 10px;
         height: auto;
