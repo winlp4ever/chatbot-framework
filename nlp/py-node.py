@@ -135,8 +135,10 @@ def run():
     add_special_tokens_(model, tokenizer)
 
     logger.info("Sample a personality")
-    origin = ['my name is bob', "i'm a french"]
-    data = ["i live in paris", "i work for a start-up", "i'm a virtual assistant professor"]
+    origin = ['my name is bob.', "i'm a french boy.", 'i love pop music.', 'i like reading and playing football.',
+        'machine learning is a method',
+        'machine learning allows machine to learn by itself']
+    data = ["i live in paris.", "i work for a start-up.", "i'm a virtual assistant.", "i teach sometimes."]
     def tokenize(obj):
             if isinstance(obj, str):
                 return tokenizer.convert_tokens_to_ids(tokenizer.tokenize(obj))

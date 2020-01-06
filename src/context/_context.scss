@@ -2,6 +2,7 @@
     position: relative;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     width: 100%;
     span.context {
         width: auto;
@@ -36,26 +37,31 @@
         }
         max-width: 800px;
     }
-
-    .valid {
-        display: inline-block;
-        box-sizing: border-box;
-        padding: 5px 10px;
-        margin: auto 10px;
-        background: white;
-        border-radius: 15px;
-        color: #444444;
-        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);
-        transition: all 0.2s;
-        border: none;
-        outline: none;
-        color: navy;
-        font: {
-            size: 70%;
-        }
-        &:focus {
-            background: whitesmoke;
-            box-shadow: none;
+    .valid-button {
+        width: 100%;
+        .valid {
+            display: inline-block;
+            box-sizing: border-box;
+            padding: 5px 10px;
+            margin: auto;
+            margin-left: 40%;
+            background: white;
+            border-radius: 15px;
+            color: #444444;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s;
+            border: none;
+            outline: none;
+            color: navy;
+            width: auto;
+            font: {
+                size: 70%;
+            }
+            &:active {
+                background: whitesmoke;
+                box-shadow: none;
+            }
         }
     }
+    
 }

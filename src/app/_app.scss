@@ -5,12 +5,14 @@
     top: 0;
 
     .chat-app {
+        max-height: 400px;
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
         width: 100%;
         height: 400px;
-        overflow-y: auto;
+        overflow-y: scroll;
         overflow-x: hidden;
         border-top: 1px solid lightgrey;
         padding: 5px;

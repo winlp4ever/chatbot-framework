@@ -5,7 +5,7 @@ import './_context.scss';
 
 export default class Context extends Component {
     state = {
-        context: ['i live in paris', 'i work for a start-up'],
+        context: ['i live in paris.', 'i work for a start-up.', "i'm a virtual assistant.", "i teach sometimes."],
         new_context: '',
     }
 
@@ -30,7 +30,7 @@ export default class Context extends Component {
         e.preventDefault(); // prevents page reloading
         if (this.state.new_context) {
             let copy = this.state.context.slice();
-            copy.push(this.state.new_context);
+            copy.push(this.state.new_context + '.');
             this.setState({context: copy, new_context: ''})
             $(e.currentTarget).val(''); 
         }
@@ -56,7 +56,9 @@ export default class Context extends Component {
                     onKeyPress={this.submit} 
                     placeholder='enter new context' 
                 />
-                <button className='valid' onClick={this.useContext}>Use this context</button>
+                <div className='valid-button'>
+                    <button className='valid' onClick={this.useContext}>Use this context</button>
+                </div>
             </div>
         )
     }
