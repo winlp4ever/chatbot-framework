@@ -96,7 +96,6 @@ io.on('connection', function(socket){
     })
 });
 
-
 app.get('/', (req, res, next) => {
     var filename = path.join(compiler.outputPath,'index');
     

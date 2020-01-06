@@ -48,7 +48,6 @@ class App extends Component {
     render() {
         return (
             <div className='app'>
-                <Context socket={this.state.socket} reset={this.reset}/>
                 <div className='chat-app'>
                     {this.state.chats.map((chat, id) => (
                         <div key={id} className={(chat.name == 'you') ? 'you': 'others'}>
@@ -68,6 +67,8 @@ class App extends Component {
                         </span>
                     </div>
                 </div>
+                <Context socket={this.state.socket} reset={this.reset}/>
+
             </div>  
         )
     }

@@ -1,8 +1,10 @@
 .contexts {
+    position: relative;
     display: flex;
     flex-direction: row;
     width: 100%;
     span.context {
+        width: auto;
         display: inline-block;
         box-sizing: border-box;
         padding: 5px 10px;
