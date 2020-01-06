@@ -90,6 +90,10 @@ io.on('connection', function(socket){
         io.emit('user-msg', msg);
         console.log('user: ' + msg);
     })
+    socket.on('new-context', context => {
+        io.emit('new-context', context);
+        console.log('new-context: \n' + context);
+    })
 });
 
 

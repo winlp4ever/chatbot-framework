@@ -1,16 +1,18 @@
 .chat-app {
+    position: fixed;   
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     width: 60%;
     left: 20%;
-    position: fixed;   
     height: 400px;
     bottom: 0;
     overflow-y: auto;
+    overflow-x: hidden;
     border-top: 1px solid lightgrey;
     padding: 5px;
     >div{
+        position: relative;
         border-radius: 10px;
         height: auto;
         white-space: pre-wrap;
@@ -76,7 +78,6 @@
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
         font-family: 'Open Sans', sans-serif;
-        position: relative;
         border-bottom: 2px solid lightgrey;
         textarea {
             font: {

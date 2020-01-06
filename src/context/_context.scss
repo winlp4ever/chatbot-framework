@@ -1,0 +1,59 @@
+.contexts {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    span.context {
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 5px 10px;
+        margin: auto 10px;
+        background: whitesmoke;
+        border-radius: 15px;
+        color: #444444;
+        font: {
+            size: 70%;
+        }
+        i.del {
+            vertical-align: middle;
+            margin: auto 5px;
+            color: lightgrey;
+        }
+    }
+    textarea {
+        margin: auto 10px;
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 5px 10px;
+        outline: none;
+        resize: none;
+        border: none;
+        color: #444444;
+        font: {
+            family: 'Open Sans', sans-serif;
+            size: 70%;
+        }
+        max-width: 800px;
+    }
+
+    .valid {
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 5px 10px;
+        margin: auto 10px;
+        background: white;
+        border-radius: 15px;
+        color: #444444;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);
+        transition: all 0.2s;
+        border: none;
+        outline: none;
+        color: navy;
+        font: {
+            size: 70%;
+        }
+        &:focus {
+            background: whitesmoke;
+            box-shadow: none;
+        }
+    }
+}

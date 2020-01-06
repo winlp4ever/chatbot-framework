@@ -135,14 +135,15 @@ def run():
     add_special_tokens_(model, tokenizer)
 
     logger.info("Sample a personality")
-    dataset = ['my name is james.', 'i am from canada.', 'i love reading and cooking.', 'i hate rainy days.']
+    origin = ['my name is bob', "i'm a french"]
+    data = ["i live in paris", "i work for a start-up", "i'm a virtual assistant professor"]
     def tokenize(obj):
             if isinstance(obj, str):
                 return tokenizer.convert_tokens_to_ids(tokenizer.tokenize(obj))
             if isinstance(obj, dict):
                 return dict((n, tokenize(o)) for n, o in obj.items())
             return list(tokenize(o) for o in obj)
-    personality = tokenize(dataset)
+    personality = tokenize(origin + data)
     logger.info("Selected personality: %s", tokenizer.decode(chain(*personality)))
 
 
@@ -168,6 +169,13 @@ def run():
         sio.emit('bot-msg', out_text)
         print('bot: ' + out_text)
         
+    @sio.on('new-context')
+    def on_message(data):
+        print(data)
+        nonlocal personality
+        global history
+        personality = tokenize(origin+data)
+        history = []
 
     @sio.event
     def disconnect():

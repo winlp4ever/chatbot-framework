@@ -1,7 +1,8 @@
 import React, { Component, useReducer } from 'react';
 import io from 'socket.io-client';
 import $ from 'jquery';
-import './app.scss';
+import './_app.scss';
+import Context from '../context/context'
 
 class App extends Component {
     state = {
@@ -40,27 +41,34 @@ class App extends Component {
         }
     }
 
+    reset = () => {
+        this.setState({chats: []});
+    }
+
     render() {
         return (
-            <div className='chat-app'>
-                {this.state.chats.map((chat, id) => (
-                    <div key={id} className={(chat.name == 'you') ? 'you': 'others'}>
-                        <span className='username'>{chat.name}</span>
-                        <span>{chat.msg}</span>
-                    </div>)
-                )}
-                <div className='new-chat'>
-                    <textarea
-                        rows={1} 
-                        onChange={this.onChange} 
-                        onKeyPress={this.submit} 
-                        placeholder='&nbsp;' 
-                    />
-                    <span className='label'>
-                        chat now
-                    </span>
+            <div className='app'>
+                <Context socket={this.state.socket} reset={this.reset}/>
+                <div className='chat-app'>
+                    {this.state.chats.map((chat, id) => (
+                        <div key={id} className={(chat.name == 'you') ? 'you': 'others'}>
+                            <span className='username'>{chat.name}</span>
+                            <span>{chat.msg}</span>
+                        </div>)
+                    )}
+                    <div className='new-chat'>
+                        <textarea
+                            rows={1} 
+                            onChange={this.onChange} 
+                            onKeyPress={this.submit} 
+                            placeholder='&nbsp;' 
+                        />
+                        <span className='label'>
+                            chat now
+                        </span>
+                    </div>
                 </div>
-            </div>
+            </div>  
         )
     }
 }
